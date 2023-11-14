@@ -28,7 +28,7 @@ jobs:
         cd `cat /tmp/WLEDtemp/wledfoldername`
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32c3dev' >>platformio.ini
-        echo 'build_flags = ${env:esp32c3dev.build_flags} -D USERMOD_AUDIOREACTIVE' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev.build_flags} -D LEDPIN=10 -D BTNPIN=3 -D IRPIN=8 -D ABL_MILLIAMPS_DEFAULT=0 -D USERMOD_AUDIOREACTIVE -D USERMOD_AUTO_SAVE' >>platformio.ini
         echo 'lib_deps = ' >>platformio.ini
         echo '  ${env:esp32c3dev.lib_deps}' >>platformio.ini
         echo '  https://github.com/blazoncek/arduinoFFT.git' >>platformio.ini
