@@ -22,16 +22,13 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://github.com/Aircoookie/WLED/archive/refs/heads/main.zip -O /tmp/WLEDtemp/mm.zip
+        wget https://api.github.com/repos/atuline/WLED/zipball/v0.13.4 -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         echo '[env:custom_build]' >>platformio.ini
-        echo 'extends = env:esp32c3dev' >>platformio.ini
-        echo 'build_flags = ${env:esp32c3dev.build_flags} -D LEDPIN=10 -D BTNPIN=3 -D IRPIN=8 -D ABL_MILLIAMPS_DEFAULT=0 -D USERMOD_AUDIOREACTIVE -D USERMOD_AUTO_SAVE' >>platformio.ini
-        echo 'lib_deps = ' >>platformio.ini
-        echo '  ${env:esp32c3dev.lib_deps}' >>platformio.ini
-        echo '  https://github.com/blazoncek/arduinoFFT.git' >>platformio.ini
+        echo 'extends = env:d1_mini' >>platformio.ini
+        echo 'build_flags = ${env:d1_mini.build_flags} -D SR_DEBUG -D MIC_LOGGER' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build
     - name: Copy Files
