@@ -22,13 +22,13 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://api.github.com/repos/atuline/WLED/zipball/v0.13.4 -O /tmp/WLEDtemp/mm.zip
+        wget https://github.com/atuline/WLED/archive/refs/heads/dev.zip -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         echo '[env:custom_build]' >>platformio.ini
-        echo 'extends = env:d1_mini' >>platformio.ini
-        echo 'build_flags = ${env:d1_mini.build_flags} -D SR_DEBUG -D MIC_LOGGER' >>platformio.ini
+        echo 'extends = env:esp32_4MB_S' >>platformio.ini
+        echo 'build_flags = ${env:esp32_4MB_S.build_flags} -D LEDPIN=32 -D BTNPIN=14 -D IRPIN=15 -D I2S_SDPIN=25 -D I2S_WSPIN=27 -D I2S_CKPIN=26' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build
     - name: Copy Files
